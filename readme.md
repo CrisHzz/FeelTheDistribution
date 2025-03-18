@@ -1,6 +1,6 @@
 # Feel the distribution
 
-´for run the project´ :
+for run the project :
 
 ```bash
 reflex run
