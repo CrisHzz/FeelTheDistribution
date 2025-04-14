@@ -5,3 +5,5 @@ assets/external/
 .web
 *.py[cod]
 flexazo/
+
+poisson/
