@@ -35,6 +35,15 @@ def part1() -> rx.Component:
                     size="7",
                     class_name="text-white mb-4",
                 ),
+                rx.heading(
+                    "Creación del conjunto de datos",
+                    size="5",
+                    class_name="text-white mb-4",
+                ),
+                rx.text(
+                    "Se crea un dataset usando las librerías de numpy y pandas, estos nos generaran los datasets para este apartado. La columna Línea A (s) representa el tiempo demora completar una operación en esta linea de operación para un producto lo mismo con la columna Línea B (s). Siendo un total de 100 registros por cada linea de producción.",
+                    class_name="text-white mb-8",
+                ),
                 rx.table.root(
                     rx.table.header(
                         rx.table.row(
