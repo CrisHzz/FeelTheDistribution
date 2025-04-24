@@ -1,6 +1,6 @@
 import reflex as rx
 from rxconfig import config
-from data_processing.point1 import dataset_general , dataset_mtc , dataset_dispersion, dataset_form
+from data_processing.point1 import dataset_general, dataset_general_short , dataset_mtc , dataset_dispersion, dataset_form
 
 class State(rx.State):
     """The app state."""
@@ -81,7 +81,7 @@ def part1() -> rx.Component:
                                     for value in row
                                 ]
                             )
-                            for row in dataset_general.values
+                            for row in dataset_general_short.values
                         ]
                     ),
                     variant="surface",
@@ -97,7 +97,7 @@ def part1() -> rx.Component:
                         class_name="text-white mb-4",
                     ),
                     rx.text(
-                        "Existen varios tipos de medidas que nos sirven para darle sentido a valor a los datos sea desde la parte basico como entender el promedio, como se desvian sus datos del centro y hasta que forma y comportamiento tienen ellos",
+                        "Existen varios tipos de medidas que nos sirven para darle sentido a valor a los datos sea desde el apartado basico como entender el promedio, como se desvian sus datos del centro y hasta que forma y comportamiento tienen ellos",
                         class_name="text-white mb-4",
                     ),
                     rx.heading(
@@ -221,6 +221,67 @@ def part1() -> rx.Component:
                 padding="6",
                 class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
             ),
+            rx.box(
+                rx.heading(
+                    "Graficos: Histograma , boxplot y tallos de hojas",
+                    size="8",
+                    class_name="text-white mb-4",
+                ),
+                rx.text(
+                    "Entender como se ven nuestros datos graficamente es parte fundamental en un analisis estadistico, aqui encontraremos el significado de las figuras y colores que le dan sentido a la estadistica",
+                    class_name="text-white mb-4",
+                ),
+                rx.heading(
+                    "Grafico de histograma",
+                    size="6",
+                    class_name="text-white mb-4",
+                ),
+                rx.text(
+                    "Un histograma es una representación gráfica de la distribución de un conjunto de datos. Se utiliza para mostrar la frecuencia de los datos en intervalos específicos, lo que permite visualizar la forma de la distribución.",
+                    class_name="text-white mb-4",
+                ),
+                rx.image(
+                    src='/histogram.png',
+                    class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto",
+                ),
+                rx.heading(
+                    "Grafico de boxplot",
+                    size="6",
+                    class_name="text-white mb-4 pt-4",  # Agregado padding-top
+                ),
+                rx.text(
+                    "Un boxplot es una representación gráfica que muestra la distribución de un conjunto de datos a través de sus cuartiles. Permite identificar la mediana, los cuartiles y valores de tipo outlier.",
+                    class_name="text-white mb-4",
+                ),
+                rx.image(
+                    src='/box_plot.png',
+                    class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto",
+                ),
+                rx.heading(
+                    "Grafico de tallos y hojas",
+                    size="6",
+                    class_name="text-white mb-4 pt-4",  # Agregado padding-top
+                ),
+                rx.text(
+                    "El gráfico de tallos y hojas es un tipo de gráfico que permite ver la distribución de los datos manteniendo su orden original y su valor exacto, lo que lo hace especialmente útil para análisis exploratorios. A diferencia de otros gráficos como los histogramas, este conserva los valores individuales, permitiendo una inspección más precisa. Además, facilita la identificación de valores atípicos (outliers), la detección de la moda, y proporciona una visión clara de la simetría o asimetría en la distribución.",
+                    class_name="text-white mb-4"
+                    ),
+
+                rx.box(
+                    class_name="h-8",  # Separación entre títulos
+                ),
+                rx.image(
+                    src='/stem_plot.png',
+                    class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto",
+                ),
+                class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
+            ),
+            rx.heading(
+                "Faltan los demas puntos",
+                size="7",
+                class_name="text-white mb-4",
+            ),
+            
             align="center",
             justify="center",
             spacing="8",

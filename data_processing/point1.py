@@ -1,7 +1,9 @@
 import pandas as pd
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
+
+#Generar datasets
 def generate_dataset1():
     np.random.seed(42)
 
@@ -29,7 +31,13 @@ generate_dataset1()
 
 dataset_general = pd.read_csv('./assets/dataset_punto1.csv')
 
-dataset_general = dataset_general.head(10)
+
+dataset_general_short = dataset_general.head(10) 
+
+
+dataset_general = dataset_general
+
+#Funciones para obtener las metricas
 
 def get_mtc(dataset):
     
@@ -99,3 +107,93 @@ def get_form_metrics(dataset):
 
 dataset_form = get_form_metrics(dataset_general)
 
+#Graficos
+
+figHist, ax_hist = plt.subplots()
+
+def create_hist():
+    #Creamos el diagrama el historigrama
+    ax_hist.hist([dataset_general['Línea A (s)'], dataset_general['Línea B (s)']], #El primer argumento es la lista de los 2
+                bins=20, alpha=0.7, label=['Línea A', 'Línea B'],
+                color=['tomato', 'orange']) #Aqui lo mismo
+
+    # Etiquetas y texto
+    ax_hist.set_xlabel('Tiempo (s)')
+    ax_hist.set_ylabel('Frecuencia')
+    ax_hist.set_title('Histograma de Tiempos - Líneas A y B')
+    ax_hist.legend()
+    # Return the figure instead of showing it
+    return figHist
+
+
+histogram = create_hist()
+
+# Save the histogram figure as an image file
+histogram_path = './assets/histogram.png'
+histogram.savefig(histogram_path)
+
+
+figBox, ax_box_plot = plt.subplots()
+
+def create_box_plots():
+    #Creamos el boxplot
+    ax_box_plot.boxplot([dataset_general['Línea A (s)'], dataset_general['Línea B (s)']],
+                        vert=True,
+                        tick_labels=['Linea A', 'Linea B'],  #Lista simple ,Usar en vez de labels tick_labels es mas nuevo
+                        boxprops=dict(facecolor='gold'),
+                        medianprops=dict(color='red'),
+                        patch_artist=True)  
+
+    ax_box_plot.set_title('Diagrama de cajas de las lineas')
+
+    return figBox
+
+boxPlot = create_box_plots()
+
+# Save the box plot figure as an image file
+box_plot_path = './assets/box_plot.png'
+boxPlot.savefig(box_plot_path)
+
+figStem, ax_stem = plt.subplots(figsize=(15, 8))
+
+#REVISARLO
+def create_stem():
+    
+    linea_a = dataset_general['Línea A (s)']
+    linea_b = dataset_general['Línea B (s)']
+    
+    
+    # Crear el stem plot para Línea A
+    ax_stem.stem(range(len(linea_a)), linea_a, #Siempre es la cantidad de datos y el dato
+                linefmt='b-',      # Línea azul
+                markerfmt='bo',    # Marcadores azules
+                basefmt='g-',      # Línea base verde
+                label='Línea A')
+    
+    # Crear el stem plot para Línea B
+    ax_stem.stem(range(len(linea_b)), linea_b,
+                linefmt='r-',      # Línea roja
+                markerfmt='ro',    # Marcadores rojos
+                basefmt='g-',      # Línea base verde
+                label='Línea B')
+    
+    # Personalizar el gráfico
+    ax_stem.set_title('Diagrama de tallo y hojas de las líneas', fontsize=20)
+    ax_stem.set_xlabel('Índice de medición', fontsize=18)
+    ax_stem.set_ylabel('Tiempo (s)', fontsize=18)
+    
+    ax_stem.set_xlim(-1, len(linea_a) + 1)
+    
+    plt.xticks(rotation=45)
+    
+    plt.tight_layout()
+    
+    ax_stem.legend(fontsize=14)
+    
+    return figStem
+
+stemPlot = create_stem()
+
+# Save the stem plot figure as an image file
+stem_plot_path = './assets/stem_plot.png'
+stemPlot.savefig(stem_plot_path)
