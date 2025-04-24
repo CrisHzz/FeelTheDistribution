@@ -8,7 +8,10 @@ class State(rx.State):
 
 def part1() -> rx.Component:
     return rx.container(
-        rx.color_mode.button(position="top-right"),
+        rx.color_mode.button(
+            position="top-right", 
+            class_name="bg-white text-black hover:bg-gray-200 transition-colors px-4 py-2 rounded-lg border-6 border-white-400 shadow-md"
+        ),
         rx.vstack(
             rx.box(
                 rx.hstack(
