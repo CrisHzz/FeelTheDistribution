@@ -1,6 +1,7 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point2 import dataset_2, dataset_2_short, dataset_dispersion2, dataset_dispersion2, dataset_form2
+from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short
 
 class State(rx.State):
     """The app state."""
@@ -245,15 +246,83 @@ def part2() -> rx.Component:
                         src='/scatter.png',
                         class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto",
                     ),
+                    rx.heading(
+                        "Encontrar la coeficiente de correlacion entre las variables",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "El coeficiente de correlación es una medida estadística que indica la fuerza y dirección de la relación lineal entre dos variables. Varía entre -1 y 1, donde 1 indica una correlación positiva perfecta, -1 una correlación negativa perfecta y 0 ninguna correlación.",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    rx.code_block(
+                        corre_variables,
+                        language="python",
+                        show_line_numbers=True,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                    rx.heading( 
+                        "Recomendación de modelo de regresión",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "Existen varios tipos de modelos de regresion que nos pueden servir para desarollar este proyecto , todo depede del tipo de datos que se tienen , la cantidad de variables , el peso de estas para la prediccion entre muchas otras caracteristicas",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    rx.code_block(
+                        best_model,
+                        language="python",
+                        show_line_numbers=True,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                    rx.heading(
+                        "Estandarizacion del dataset",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "La estandarización es un proceso que transforma los datos para que tengan una media de 0 y una desviación estándar de 1. Esto es útil para comparar variables que están en diferentes escalas o unidades. ayuda bastante a la hora de alimentar nuestro modelo o regresion haciendo los datos mas pequeños y disminuir el tiempo de entreno",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    rx.table.root(
+                        rx.table.header(
+                            rx.table.row(
+                                *[
+                                    rx.table.column_header_cell(
+                                        col,
+                                        class_name="text-white"
+                                    )
+                                    for col in dataset_estandarizado_short.columns
+                                ]
+                            )
+                        ),
+                        rx.table.body(
+                            *[
+                                rx.table.row(
+                                    *[
+                                        rx.table.cell(
+                                            str(value),
+                                            class_name="text-white"
+                                        )
+                                        for value in row
+                                    ]
+                                )
+                                for row in dataset_estandarizado_short.values
+                            ]
+                        ),
+                        variant="surface",
+                        class_name="bg-black",
+                    ),
+
 
                     
                 class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
             ),
                 
-
-
-
-
             align="center",
             justify="center",
             spacing="8",
