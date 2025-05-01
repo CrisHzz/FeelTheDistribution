@@ -17,7 +17,7 @@ def part1() -> rx.Component:
                 rx.hstack(
                     rx.heading(
                         "FeelTheDistribution",
-                        size="7",
+                        size="8",
                         class_name="text-white font-bold pl-4",
                     ),
                     rx.hstack(
@@ -36,6 +36,12 @@ def part1() -> rx.Component:
                             href="/part3", 
                             class_name="text-white hover:text-purple-300 transition-colors px-4 py-2 rounded-lg hover:bg-purple-900/30"
                         ),
+                        rx.link(
+                            "Bibliografias", 
+                            href="/bibliografias", 
+                            class_name="text-white hover:text-purple-300 transition-colors px-4 py-2 rounded-lg hover:bg-purple-900/30"
+                        ),
+                        
                         spacing="8",
                     ),
                     width="100%",

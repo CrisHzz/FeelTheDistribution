@@ -75,3 +75,45 @@ def train_regression_weight_bias():
     return (f'El peso (Coeficiente) del modelo es {regression.coef_[0].round(4)} y su sesgo (intercepto) es {regression.intercept_[0].round(4)}')
 
 model_message = train_regression_weight_bias()
+
+
+def regression_results():
+
+    regression = LinearRegression()
+
+    X = dataset_estandarizado['velocidad_produccion'].values.reshape(-1,1)
+    Y = dataset_estandarizado['consumo_energia'].values.reshape(-1,1)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, Y,
+                                                        test_size=0.3,
+                                                        random_state=42)
+
+    regression.fit(X_train, y_train)
+
+    # Predicciones
+    y_pred = regression.predict(X_test)
+
+    # Métricas
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test, y_pred)
+
+    # Construcción del texto
+    resultados = f"""Resultados de la regresión lineal:
+
+- Error cuadrático medio (MSE): {mse:.4f}
+- Raíz del error cuadrático medio (RMSE): {rmse:.4f}
+- Coeficiente de determinación (R²): {r2:.4f}
+
+Interpretación:
+- El modelo explica el {r2*100:.2f}% de la variabilidad en los datos
+- El error promedio en las predicciones es de {rmse:.4f} unidades
+- El modelo presenta una precisión muy baja; esto puede deberse a registros limitados o baja calidad de los datos.
+"""
+    return resultados
+
+
+
+regression_data_model= regression_results()
+
+print(regression_data_model)

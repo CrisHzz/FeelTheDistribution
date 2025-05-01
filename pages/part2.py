@@ -1,7 +1,7 @@
 import reflex as rx
 from rxconfig import config
-from data_processing.point2 import dataset_2, dataset_2_short, dataset_dispersion2, dataset_dispersion2, dataset_form2
-from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short,regression_instancia , model_message
+from data_processing.point2 import dataset_2_short, dataset_dispersion2, dataset_dispersion2, dataset_form2
+from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short , regression_instancia , model_message , regression_data_model
 
 class State(rx.State):
     """The app state."""
@@ -36,8 +36,13 @@ def part2() -> rx.Component:
                             class_name="text-white hover:text-purple-300 transition-colors px-4 py-2 rounded-lg hover:bg-purple-900/30"
                         ),
                         rx.link(
-                            "Part 3", 
+                            "Part 3",
                             href="/part3", 
+                            class_name="text-white hover:text-purple-300 transition-colors px-4 py-2 rounded-lg hover:bg-purple-900/30"
+                        ),
+                        rx.link(
+                            "Bibliografias", 
+                            href="/bibliografias", 
                             class_name="text-white hover:text-purple-300 transition-colors px-4 py-2 rounded-lg hover:bg-purple-900/30"
                         ),
                         spacing="8",
@@ -271,7 +276,7 @@ def part2() -> rx.Component:
                         class_name="text-white mb-4 pt-4",
                     ),
                     rx.text(
-                        "Existen varios tipos de modelos de regresion que nos pueden servir para desarollar este proyecto , todo depede del tipo de datos que se tienen , la cantidad de variables , el peso de estas para la prediccion entre muchas otras caracteristicas",
+                        "Existen varios tipos de modelos de regresion que nos pueden servir para desarollar este proyecto , todo depende del tipo de datos que se tienen , la cantidad de variables , el peso de estas para la prediccion entre muchas otras caracteristicas. En este caso a pesar de plantear 3 tipos de modelo de regresion , la regresion lineal es la que mejor se adapta a los datos y el comportamiento de estos, ridge y lasso nos darian el mismo rendimiento pues las condiciones para estos no son las indicadas y el R2 nos da igual en los 3 casos",
                         style={"white-space": "pre-line"},
                         class_name="text-white mb-4",
                     ),
@@ -331,14 +336,15 @@ def part2() -> rx.Component:
                         class_name="text-white mb-4",
 
                     ),
-                    rx.html(
-                        """
-                        <div class='bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto'>
-                            $$
-                            y = mx + b
-                            $$
-                        </div>
-                        """,
+                    rx.markdown(
+                        "$$Y= WX + b $$",
+                    
+               
+                    ),
+                    rx.text(
+                        "Donde W son los pesos y b el sesgo de la regresion lineal",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
                     ),
                     rx.code_block(
                         regression_instancia_text,
@@ -362,6 +368,28 @@ def part2() -> rx.Component:
                         show_line_numbers=True,
                         class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
                     ),
+                    rx.markdown(
+                        "$$ Y = 0.8283X -0.0237 $$"
+                    ),
+                    rx.text(
+                        "Evaluacion del rendimiento de la regresion lineal",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+
+                    rx.text(
+                        "Existen varias metricas para evaluar nuestro rendimiento del modelo , en este caso usaremos el error cuadratico medio , el coeficiente de determinacion y la raiz del error cuadratico medio",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+
+                    rx.code_block(
+                        regression_data_model,
+                        language="python",
+                        show_line_numbers=True,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                    
                         
                     
 
