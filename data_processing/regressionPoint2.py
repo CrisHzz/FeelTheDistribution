@@ -54,3 +54,24 @@ dataset_estandarizado = modelo_estandarizador.fit_transform(dataset_general.drop
 dataset_estandarizado = pd.DataFrame(columns=['velocidad_produccion','consumo_energia'],data=dataset_estandarizado)
 
 dataset_estandarizado_short= dataset_estandarizado.head(10)
+
+regression_instancia = LinearRegression()
+
+def train_regression_weight_bias():
+
+    regression = LinearRegression()
+
+    X = dataset_estandarizado['velocidad_produccion'].values.reshape(-1,1)
+
+    Y = dataset_estandarizado['consumo_energia'].values.reshape(-1,1)
+
+
+    X_train, X_test, y_train, y_test = train_test_split(X, Y,
+                                                        test_size=0.3,
+                                                        random_state=42)
+    
+    regression.fit(X_train, y_train)
+
+    return (f'El peso (Coeficiente) del modelo es {regression.coef_[0].round(4)} y su sesgo (intercepto) es {regression.intercept_[0].round(4)}')
+
+model_message = train_regression_weight_bias()

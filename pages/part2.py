@@ -1,11 +1,14 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point2 import dataset_2, dataset_2_short, dataset_dispersion2, dataset_dispersion2, dataset_form2
-from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short
+from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short,regression_instancia , model_message
 
 class State(rx.State):
     """The app state."""
     ...
+
+# Convertir el objeto regression_instancia a texto antes de pasarlo a rx.code_block
+regression_instancia_text = str(regression_instancia)
 
 def part2() -> rx.Component:
     return rx.container(
@@ -317,7 +320,50 @@ def part2() -> rx.Component:
                         variant="surface",
                         class_name="bg-black",
                     ),
+                    rx.heading(
+                        "Implementacion de regresion lineal",
+                        size="7",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "Ahora ya encontramos el tipo de regresion adecuada para el conjunto de datos , gracias a ello podemos crear una regresion lineal que permitira hacer una prediccion dada una variable indepediente",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
 
+                    ),
+                    rx.html(
+                        """
+                        <div class='bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto'>
+                            $$
+                            y = mx + b
+                            $$
+                        </div>
+                        """,
+                    ),
+                    rx.code_block(
+                        regression_instancia_text,
+                        language="python",
+                        show_line_numbers=True,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                    rx.heading(
+                        "Entreno del modelo , pesos y sesgos de este",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "Vamos a entrenar nuestro modelo utilizando aproximadamente un 70% para los datos de entreno y un 30% para los datos de testeo, esto nos permitira ver si el modelo es capaz de predecir los datos que no ha visto antes , ademas de visualizar el peso y sesgo del modelo",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    rx.code_block(
+                        model_message,
+                        language="python",
+                        show_line_numbers=True,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                        
+                    
 
                     
                 class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
