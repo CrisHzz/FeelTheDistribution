@@ -1,6 +1,7 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point1 import dataset_general, dataset_general_short , dataset_mtc , dataset_dispersion, dataset_form
+from data_processing.point1Theory import df_pvalues
 
 class State(rx.State):
     """The app state."""
@@ -53,57 +54,57 @@ def part1() -> rx.Component:
                 class_name="w-full mb-8",
             ),
             rx.box(
-                rx.heading(
-                    "Dataset Parte #1",
-                    size="7",
-                    class_name="text-white mb-4",
-                ),
-                rx.heading(
-                    "Creación del conjunto de datos",
-                    size="5",
-                    class_name="text-white mb-4",
-                ),
-                rx.text(
-                    "Se crea un dataset usando las librerías de numpy y pandas, estos nos generarán los datasets para este apartado. La columna Línea A (s) representa el tiempo que demora completar una operación en esta línea de operación para un producto, lo mismo con la columna Línea B (s). Siendo un total de 100 registros por cada línea de producción.",
-                    class_name="text-white mb-8",
-                ),
-                rx.table.root(
-                    rx.table.header(
-                        rx.table.row(
-                            *[
-                                rx.table.column_header_cell(
-                                    col,
-                                    class_name="text-white"
-                                )
-                                for col in dataset_general.columns
-                            ]
-                        )
+                rx.vstack(
+                    # Dataset Parte #1
+                    rx.heading(
+                        "Dataset Parte #1",
+                        size="7",
+                        class_name="text-white mb-4",
                     ),
-                    rx.table.body(
-                        *[
+                    rx.heading(
+                        "Creación del conjunto de datos",
+                        size="5",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.text(
+                        "Se crea un dataset usando las librerías de numpy y pandas, estos nos generarán los datasets para este apartado. La columna Línea A (s) representa el tiempo que demora completar una operación en esta línea de operación para un producto, lo mismo con la columna Línea B (s). Siendo un total de 100 registros por cada línea de producción.",
+                        class_name="text-white mb-8",
+                    ),
+                    rx.table.root(
+                        rx.table.header(
                             rx.table.row(
                                 *[
-                                    rx.table.cell(
-                                        str(value),
+                                    rx.table.column_header_cell(
+                                        col,
                                         class_name="text-white"
                                     )
-                                    for value in row
+                                    for col in dataset_general.columns
                                 ]
                             )
-                            for row in dataset_general_short.values
-                        ]
+                        ),
+                        rx.table.body(
+                            *[
+                                rx.table.row(
+                                    *[
+                                        rx.table.cell(
+                                            str(value),
+                                            class_name="text-white"
+                                        )
+                                        for value in row
+                                    ]
+                                )
+                                for row in dataset_general_short.values
+                            ]
+                        ),
+                        variant="surface",
+                        class_name="bg-black mb-8 w-full",
                     ),
-                    variant="surface",
-                    class_name="bg-black",
-                ),
-                class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
-            ),
-            rx.box(
-                rx.vstack(
+                    
+                    # Medidas de tendencia central, dispersión y forma
                     rx.heading(
                         "Medidas de tendencia central, dispersión y forma",
                         size="7",
-                        class_name="text-white mb-4",
+                        class_name="text-white mb-4 mt-8",
                     ),
                     rx.text(
                         "Existen varios tipos de medidas que nos sirven para darle sentido a valor a los datos sea desde el apartado basico como entender el promedio, como se desvian sus datos del centro y hasta que forma y comportamiento tienen ellos",
@@ -145,7 +146,7 @@ def part1() -> rx.Component:
                             ]
                         ),
                         variant="surface",
-                        class_name="bg-black mb-8",
+                        class_name="bg-black mb-8 w-full",
                     ),
                     rx.heading(
                         "Medidas de dispersión",
@@ -183,7 +184,7 @@ def part1() -> rx.Component:
                             ]
                         ),
                         variant="surface",
-                        class_name="bg-black mb-8",
+                        class_name="bg-black mb-8 w-full",
                     ),
                     rx.heading(
                         "Medidas de forma",
@@ -221,76 +222,126 @@ def part1() -> rx.Component:
                             ]
                         ),
                         variant="surface",
-                        class_name="bg-black",
+                        class_name="bg-black mb-8 w-full",
                     ),
-                    align="start",
-                    spacing="4",
-                ),
-                width="100%",
-                padding="6",
-                class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
-            ),
-            rx.box(
-                rx.heading(
-                    "Graficos: Histograma , boxplot y tallos de hojas",
-                    size="8",
-                    class_name="text-white mb-4",
-                ),
-                rx.text(
-                    "Entender como se ven nuestros datos graficamente es parte fundamental en un analisis estadistico, aqui encontraremos el significado de las figuras y colores que le dan sentido a la estadistica",
-                    class_name="text-white mb-4",
-                ),
-                rx.heading(
-                    "Grafico de histograma",
-                    size="6",
-                    class_name="text-white mb-4",
-                ),
-                rx.text(
-                    "Un histograma es una representación gráfica de la distribución de un conjunto de datos. Se utiliza para mostrar la frecuencia de los datos en intervalos específicos, lo que permite visualizar la forma de la distribución.",
-                    class_name="text-white mb-4",
-                ),
-                rx.image(
-                    src='/histogram.png',
-                    class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto",
-                ),
-                rx.heading(
-                    "Grafico de boxplot",
-                    size="6",
-                    class_name="text-white mb-4 pt-4",  # Agregado padding-top
-                ),
-                rx.text(
-                    "Un boxplot es una representación gráfica que muestra la distribución de un conjunto de datos a través de sus cuartiles. Permite identificar la mediana, los cuartiles y valores de tipo outlier.",
-                    class_name="text-white mb-4",
-                ),
-                rx.image(
-                    src='/box_plot.png',
-                    class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto",
-                ),
-                rx.heading(
-                    "Grafico de tallos y hojas",
-                    size="6",
-                    class_name="text-white mb-4 pt-4",  # Agregado padding-top
-                ),
-                rx.text(
-                    "El gráfico de tallos y hojas es un tipo de gráfico que permite ver la distribución de los datos manteniendo su orden original y su valor exacto, lo que lo hace especialmente útil para análisis exploratorios. A diferencia de otros gráficos como los histogramas, este conserva los valores individuales, permitiendo una inspección más precisa. Además, facilita la identificación de valores atípicos (outliers), la detección de la moda, y proporciona una visión clara de la simetría o asimetría en la distribución.",
-                    class_name="text-white mb-4"
+                    
+                    # Gráficos
+                    rx.heading(
+                        "Graficos: Histograma, boxplot y tallos de hojas",
+                        size="7",
+                        class_name="text-white mb-4 mt-8",
+                    ),
+                    rx.text(
+                        "Entender como se ven nuestros datos graficamente es parte fundamental en un analisis estadistico, aqui encontraremos el significado de las figuras y colores que le dan sentido a la estadistica",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.heading(
+                        "Grafico de histograma",
+                        size="6",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.text(
+                        "Un histograma es una representación gráfica de la distribución de un conjunto de datos. Se utiliza para mostrar la frecuencia de los datos en intervalos específicos, lo que permite visualizar la forma de la distribución.",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.image(
+                        src='/histogram.png',
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 w-full",
+                    ),
+                    rx.heading(
+                        "Grafico de boxplot",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "Un boxplot es una representación gráfica que muestra la distribución de un conjunto de datos a través de sus cuartiles. Permite identificar la mediana, los cuartiles y valores de tipo outlier.",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.image(
+                        src='/box_plot.png',
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 w-full",
+                    ),
+                    rx.heading(
+                        "Grafico de tallos y hojas",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "El gráfico de tallos y hojas es un tipo de gráfico que permite ver la distribución de los datos manteniendo su orden original y su valor exacto, lo que lo hace especialmente útil para análisis exploratorios. A diferencia de otros gráficos como los histogramas, este conserva los valores individuales, permitiendo una inspección más precisa. Además, facilita la identificación de valores atípicos (outliers), la detección de la moda, y proporciona una visión clara de la simetría o asimetría en la distribución.",
+                        class_name="text-white mb-4"
+                    ),
+                    rx.image(
+                        src='/stem_comparison_tables.png',
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 w-full",
+                    ),
+                    
+                    # Identificar la distribución
+                    rx.heading(
+                        "Indentificar la distribucion indicada",
+                        size="7",
+                        class_name="text-white mb-4 mt-8",
+                    ),
+                    rx.text(
+                        "Para identificar la distribución de los datos, se aplican pruebas de bondad de ajuste. Estas pruebas comparan la distribución observada con varias distribuciones teóricas para determinar cuál se ajusta mejor a los datos. En este caso, se aplicaron las pruebas de Kolmogorov-Smirnov (KS) para las distribuciones Normal, Exponencial y Weibull.",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.table.root(
+                        rx.table.header(
+                            rx.table.row(
+                                *[
+                                    rx.table.column_header_cell(
+                                        col,
+                                        class_name="text-white"
+                                    )
+                                    for col in df_pvalues.columns
+                                ]
+                            )
+                        ),
+                        rx.table.body(
+                            *[
+                                rx.table.row(
+                                    *[
+                                        rx.table.cell(
+                                            str(value),
+                                            class_name="text-white"
+                                        )
+                                        for value in row
+                                    ]
+                                )
+                                for row in df_pvalues.values
+                            ]
+                        ),
+                        variant="surface",
+                        class_name="bg-black mb-8 w-full",
+                    ),
+                    rx.text(
+                        "En la tabla anterior, se presentan los resultados de las pruebas de bondad de ajuste para las distribuciones Normal, Exponencial y Weibull. La columna 'Mejor ajuste' indica cuál distribución se ajusta mejor a los datos de cada línea de producción. Si el valor p es menor que el nivel de significancia (α = 0.05), se rechaza la hipótesis nula de que los datos siguen esa distribución.",
+                        class_name="text-white mb-4 font-bold"
+                    ),
+                    rx.image(
+                        src='/Línea_A_dist_fit.png',
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 w-full",
+                    ),
+                    rx.text(
+                        "Se muestra el gráfico de la Línea A con la distribución Normal superpuesta. La línea azul representa la distribución Normal ajustada a los datos de la Línea A. Se observa que la distribución Normal se ajusta bastante bien a los datos.",
+                        class_name="text-white mb-4"
+                    ),
+                    rx.image(
+                        src='/Línea_B_dist_fit.png',
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 w-full",
+                    ),
+                    rx.text(
+                        "En el gráfico de la Línea B con la distribución Normal y weibull superpuesta. La línea azul representa la distribución Normal ajustada a los datos de la Línea B.",
+                        class_name="text-white mb-4"
                     ),
 
-                rx.box(
-                    class_name="h-8",  # Separación entre títulos
-                ),
-                rx.image(
-                    src='/stem_plot.png',
-                    class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto",
+                    
+                    align="start",
+                    spacing="4",
+                    width="100%",
                 ),
                 class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
             ),
-            rx.heading(
-                "Faltan los demas puntos",
-                size="7",
-                class_name="text-white mb-4",
-            ),
-            
             align="center",
             justify="center",
             spacing="8",
