@@ -1,7 +1,7 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point1 import dataset_general, dataset_general_short , dataset_mtc , dataset_dispersion, dataset_form
-from data_processing.point1Theory import df_pvalues
+from data_processing.point1Theory import df_pvalues , probability_time_extra, confidence_intervals_95
 
 class State(rx.State):
     """The app state."""
@@ -334,7 +334,81 @@ def part1() -> rx.Component:
                         "En el gráfico de la Línea B con la distribución Normal y weibull superpuesta. La línea azul representa la distribución Normal ajustada a los datos de la Línea B.",
                         class_name="text-white mb-4"
                     ),
+                    rx.heading(
+                        "Utilizando la distribucion indicada, encontrar la probabilidad de encontrar un tiempo extra",
+                        size="7",
+                        class_name="text-white mb-4 mt-8",
+                    ),
+                    rx.text(
+                        "Calcule la probabilidad de que un ciclo exceda el tiempo estándar establecido en 120 segundos Determine el tiempo máximo que debe establecerse como estándar para garantizar que el 90% de los ciclos se completen dentro de ese tiempo ",
+                        size="5",
+                        class_name="text-white mb-4",
 
+                    ),
+                    rx.code_block(
+                        probability_time_extra,
+                        language="python",
+                        class_name="text-white mb-4",
+                    ),
+                    
+                    rx.heading(
+                        "Interpretación de resultados",
+                        size="6",
+                        class_name="text-white mb-4 mt-4",
+                    ),
+                    rx.text(
+                        "Los resultados del análisis probabilístico muestran lo siguiente:",
+                        class_name="text-white mb-2",
+                    ),
+                    rx.unordered_list(
+                        rx.list_item(
+                            rx.text(
+                                rx.text("Línea A: ", as_="span", class_name="font-bold"), 
+                                "La probabilidad de que un ciclo exceda el tiempo estándar de 120 segundos es del 45.45%. Esto significa que casi la mitad de los ciclos de producción en esta línea sobrepasarán el tiempo establecido, lo cual indica una eficiencia comprometida."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                rx.text("Línea A (tiempo estándar para 90%): ", as_="span", class_name="font-bold"), 
+                                "Para garantizar que el 90% de los ciclos se completen dentro del tiempo estándar, este debería establecerse en 130.60 segundos, lo que representa un incremento de 10.6 segundos respecto al valor actual."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                rx.text("Línea B: ", as_="span", class_name="font-bold"), 
+                                "La probabilidad de que un ciclo exceda los 120 segundos es considerablemente menor, solo del 19.75%. Esto muestra que la Línea B es más eficiente y consistente en términos de tiempos de producción."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                rx.text("Línea B (tiempo estándar para 90%): ", as_="span", class_name="font-bold"), 
+                                "Para garantizar que el 90% de los ciclos se completen a tiempo en esta línea, el estándar debería establecerse en 124.93 segundos, un incremento mucho menor de solo 4.93 segundos."
+                            )
+                        ),
+                        class_name="text-white mb-4 pl-6",
+                    ),
+                    rx.text(
+                        "Con base en estos resultados, podemos concluir que la Línea B presenta un mejor desempeño operativo en términos de tiempos de ciclo. La menor variabilidad y el tiempo promedio más bajo en la Línea B sugieren que podría ser beneficioso analizar qué factores contribuyen a su mejor rendimiento para potencialmente implementarlos también en la Línea A y mejorar su eficiencia.",
+                        class_name="text-white mb-4 font-bold",
+                    ),
+                    rx.heading(
+                        "Intervalos de confianza al 95%",
+                        size="7",
+                        class_name="text-white mb-4 mt-8",
+                    ),
+                    rx.text(
+                        "Los intervalos de confianza al 95% para las medias de las líneas A y B son los siguientes:",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.code_block(
+                        confidence_intervals_95,
+                        language="python",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.text(
+                        "Esto significa que estamos un 95% seguros de que la media real del tiempo de producción para la Línea A está entre 117.16 y 120.76 segundos, mientras que para la Línea B está entre 108.00 y 112.54 segundos.",
+                        class_name="text-white mb-4",
+                    ),
                     
                     align="start",
                     spacing="4",
