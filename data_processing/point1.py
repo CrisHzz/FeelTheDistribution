@@ -156,44 +156,4 @@ boxPlot.savefig(box_plot_path)
 
 figStem, ax_stem = plt.subplots(figsize=(15, 8))
 
-#REVISARLO
-def create_stem():
-    
-    linea_a = dataset_general['Línea A (s)']
-    linea_b = dataset_general['Línea B (s)']
-    
-    
-    # Crear el stem plot para Línea A
-    ax_stem.stem(range(len(linea_a)), linea_a, #Siempre es la cantidad de datos y el dato
-                linefmt='b-',      # Línea azul
-                markerfmt='bo',    # Marcadores azules
-                basefmt='g-',      # Línea base verde
-                label='Línea A')
-    
-    # Crear el stem plot para Línea B
-    ax_stem.stem(range(len(linea_b)), linea_b,
-                linefmt='r-',      # Línea roja
-                markerfmt='ro',    # Marcadores rojos
-                basefmt='g-',      # Línea base verde
-                label='Línea B')
-    
-    # Personalizar el gráfico
-    ax_stem.set_title('Diagrama de tallo y hojas de las líneas', fontsize=20)
-    ax_stem.set_xlabel('Índice de medición', fontsize=18)
-    ax_stem.set_ylabel('Tiempo (s)', fontsize=18)
-    
-    ax_stem.set_xlim(-1, len(linea_a) + 1)
-    
-    plt.xticks(rotation=45)
-    
-    plt.tight_layout()
-    
-    ax_stem.legend(fontsize=14)
-    
-    return figStem
 
-stemPlot = create_stem()
-
-# Save the stem plot figure as an image file
-stem_plot_path = './assets/stem_plot.png'
-stemPlot.savefig(stem_plot_path)
