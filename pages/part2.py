@@ -1,7 +1,7 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point2 import dataset_2_short, dataset_dispersion2, dataset_dispersion2, dataset_form2
-from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short, regression_instancia, model_message, regression_data_model, model_validation
+from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short, regression_instancia, model_message, regression_data_model, model_validation, model_optimization
 
 class State(rx.State):
     """The app state."""
@@ -482,6 +482,41 @@ def part2() -> rx.Component:
                         style={"white-space": "pre-line"},
                         class_name="text-white mb-4",
                     ),
+                    
+                    # Nueva sección para el punto e: Utilización del modelo
+                    rx.heading(
+                        "Aplicación y Optimización del Modelo",
+                        size="7",
+                        class_name="text-white mb-4 pt-6",
+                    ),
+                    rx.text(
+                        "En esta sección aplicaremos el modelo para realizar predicciones específicas, construir intervalos de predicción, optimizar la eficiencia energética y proporcionar recomendaciones concretas para la empresa.",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    
+                    rx.code_block(
+                        model_optimization,
+                        language="markdown",
+                        show_line_numbers=False,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                    
+                    rx.heading(
+                        "Visualización de la Eficiencia Energética",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "El siguiente gráfico muestra la relación entre la velocidad de producción y la eficiencia energética (consumo por unidad producida). El punto marcado en rojo representa la velocidad óptima que minimiza el consumo energético por unidad.",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    rx.image(
+                        src='/eficiencia_vs_velocidad.png',
+                        height="600px",
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 object-contain",
+                    ),
 
                 class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
             ),
@@ -496,3 +531,5 @@ def part2() -> rx.Component:
 
 app = rx.App()
 app.add_page(part2)
+
+#e
