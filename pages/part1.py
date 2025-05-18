@@ -430,6 +430,77 @@ def part1() -> rx.Component:
                         class_name="text-white mb-4",
                     ),
                     
+                    # Comparación con artículo científico
+                    rx.heading(
+                        "Comparación con artículo científico",
+                        size="7",
+                        class_name="text-white mb-4 mt-8",
+                    ),
+                    rx.image(
+                        src='/article_image.png',  # Asegúrate de guardar tu imagen con este nombre en la carpeta /assets
+                        height="300px",
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-6 object-contain",
+                    ),
+                    rx.text(
+                        "Se realizó una comparación de las técnicas estadísticas utilizadas en este análisis con las del artículo 'Design the Abnormal Object Detection System Using Template Matching and Subtract Background Algorithm', obtenido a través de la base de datos Springer de la universidad.",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.heading(
+                        "Similitudes metodológicas",
+                        size="6",
+                        class_name="text-white mb-2",
+                    ),
+                    rx.unordered_list(
+                        rx.list_item(
+                            rx.text(
+                                "Uso de distribuciones estadísticas para modelar el comportamiento de los datos: En nuestro análisis aplicamos pruebas de bondad de ajuste para identificar la distribución que mejor se adapta a los datos (Normal, Exponencial, Weibull), mientras que en el artículo se utilizan distribuciones estadísticas para modelar patrones normales y anómalos en la detección de objetos."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                "Aplicación de pruebas de hipótesis para la toma de decisiones: Nuestro análisis utiliza la prueba t para determinar si hay diferencia significativa entre líneas de producción; similarmente, el algoritmo de detección de objetos anómalos emplea pruebas estadísticas para decidir si un objeto se desvía significativamente del patrón esperado."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                "Análisis de variabilidad mediante medidas de dispersión: En ambos casos se utilizan medidas como la desviación estándar y la varianza para cuantificar y analizar la variabilidad de los datos, ya sea en tiempos de ciclo o en características de imágenes."
+                            )
+                        ),
+                        class_name="text-white mb-4 pl-6",
+                    ),
+                    rx.heading(
+                        "Diferencias metodológicas",
+                        size="6",
+                        class_name="text-white mb-2",
+                    ),
+                    rx.unordered_list(
+                        rx.list_item(
+                            rx.text(
+                                "Dominio de aplicación: Nuestro análisis se centra en datos temporales (tiempos de ciclo en procesos productivos), mientras que el artículo trabaja con datos espaciales y visuales (detección de objetos en imágenes)."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                "Técnicas específicas: El artículo implementa algoritmos especializados como Template Matching y Subtract Background que no tienen equivalente directo en nuestro análisis estadístico tradicional de procesos industriales."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                "Métricas de evaluación: En nuestro caso utilizamos p-valores e intervalos de confianza para evaluar los resultados, mientras que el sistema de detección descrito en el artículo emplea métricas como precisión, recall y tasas de falsos positivos/negativos típicas del campo de visión por computadora."
+                            )
+                        ),
+                        rx.list_item(
+                            rx.text(
+                                "Enfoque de modelado: Nuestro enfoque es paramétrico y basado en distribuciones teóricas conocidas, mientras que el artículo utiliza un enfoque híbrido que combina técnicas estadísticas con procesamiento de imágenes y aprendizaje por patrones."
+                            )
+                        ),
+                        class_name="text-white mb-4 pl-6",
+                    ),
+                    rx.text(
+                        "Esta comparación ilustra cómo los principios estadísticos se aplican en diversos campos, aunque con adaptaciones específicas según el dominio de aplicación. Tanto nuestro análisis de procesos industriales como el sistema de detección de anomalías comparten fundamentos estadísticos, pero implementados de manera diferente según los objetivos específicos.",
+                        class_name="text-white mb-4",
+                    ),
+                    
                     align="start",
                     spacing="4",
                     width="100%",
