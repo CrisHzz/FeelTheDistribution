@@ -1,7 +1,7 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point1 import dataset_general, dataset_general_short , dataset_mtc , dataset_dispersion, dataset_form
-from data_processing.point1Theory import df_pvalues , probability_time_extra, confidence_intervals_95
+from data_processing.point1Theory import df_pvalues , probability_time_extra, confidence_intervals_95, hypothesis_test_results
 
 class State(rx.State):
     """The app state."""
@@ -407,6 +407,26 @@ def part1() -> rx.Component:
                     ),
                     rx.text(
                         "Esto significa que estamos un 95% seguros de que la media real del tiempo de producción para la Línea A está entre 117.16 y 120.76 segundos, mientras que para la Línea B está entre 108.00 y 112.54 segundos.",
+                        class_name="text-white mb-4",
+                    ),
+                    
+                    # Prueba de hipótesis
+                    rx.heading(
+                        "Prueba de hipótesis para comparar tiempos medios",
+                        size="7",
+                        class_name="text-white mb-4 mt-8",
+                    ),
+                    rx.text(
+                        "Para determinar si existe una diferencia estadísticamente significativa entre los tiempos medios de ciclo de ambas líneas de producción, se realizó una prueba t de Student para muestras independientes (también conocida como prueba t de Welch, ya que las varianzas son diferentes).",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.code_block(
+                        hypothesis_test_results,
+                        language="python",
+                        class_name="text-white mb-4",
+                    ),
+                    rx.text(
+                        "Esta prueba nos permite tomar decisiones basadas en evidencia estadística sobre si las diferencias observadas en los tiempos de ciclo son significativas o podrían deberse al azar. Los resultados tienen importantes implicaciones para la gestión del proceso, ya que nos ayudan a identificar si una línea de producción es significativamente más eficiente que la otra.",
                         class_name="text-white mb-4",
                     ),
                     
