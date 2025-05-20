@@ -428,6 +428,81 @@ def part3() -> rx.Component:
                             src='/embark.png',
                             class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto mb-4",
                         ),
+                        rx.heading(
+                            "Prueba de hipotesis: El dataset es lo suficientemente grande para crear un modelo predictivo con precision del 70%?",
+                            size="6",
+                            class_name="text-purple-200 mb-4",
+                        ),
+
+                        rx.text(
+                            "A la hora de entrenar nuestro modelo, vamos a plantear una prueba de hipótesis que nos permitirá determinar si la cantidad de datos es suficiente para obtener una precisión esperada del 70%. Para esto establecemos:",
+                            class_name="text-gray-200 mb-4",
+                        ),
+                        rx.text(
+                            "Hipótesis nula (H₀): La cantidad de datos no es suficiente para alcanzar un 70% de precisión.",
+                            class_name="text-gray-200 font-bold mb-2",
+                        ),
+                        rx.text(
+                            "Hipótesis alternativa (H₁): La cantidad de datos es suficiente para alcanzar un 70% de precisión.",
+                            class_name="text-gray-200 font-bold mb-4",
+                        ),
+                        rx.text(
+                            "Nivel de significancia (α): 0.05",
+                            class_name="text-gray-200 font-bold mb-2",
+                        ),
+                        rx.text(
+                            "Tamaño de la muestra (n): 351",
+                            class_name="text-gray-200 font-bold mb-4",
+                        ),
+                        rx.image(
+                            src='/hypothesis.png',
+                            class_name="p-4 rounded-2xl bg-black shadow-lg overflow-x-auto mb-4",
+                        ),
+                        rx.text(
+                            "Teóricamente, el tamaño de la muestra no es lo suficientemente grande para obtener esa precisión esperada en terminos teoricos; "
+                            "sin embargo, empíricamente y computacionalmente, obtenemos una precisión del 76%.",
+                            class_name="text-gray-200 mb-4",
+                        ),
+                        rx.heading(
+                            "Titanic Survivors SandBox",
+                            size="8",
+                            class_name="text-purple-200 mb-4",
+                        ),
+                        rx.text(
+                            "Es hora de probar nuestro modelo. Ingresa a esta página para explorar la caja de arena del proyecto, donde podrás hacer una predicción de supervivencia llenando la siguiente información:",
+                            class_name="text-gray-200 mb-4",
+                        ),
+                        rx.vstack(
+                            rx.unordered_list(
+                                rx.list_item("Age: Edad de la persona", class_name="text-gray-200 font-bold"),
+                                rx.list_item("Gender: El género de la persona", class_name="text-gray-200 font-bold"), 
+                                rx.list_item("Fare: El costo del pasaje", class_name="text-gray-200 font-bold"),
+                                rx.list_item("Embarked: El puerto de embarque", class_name="text-gray-200 font-bold"),
+                                spacing="2",
+                            ),
+                            class_name="mb-4",
+                            align="start",
+                        ),
+                        rx.text(
+                            "¿Podrías haber sobrevivido al Titanic? ¡Pruébalo ahora!",
+                            class_name="text-purple-200 font-bold mb-4",
+                        ),
+                        rx.box(
+                            rx.text(
+                                "NOTA: Al entrar por primera vez, debes esperar un tiempo mientras carga la página. "
+                                "Luego de eso, recarga la página y una vez que aparezca arriba que el estado del modelo "
+                                "está en verde, podrás hacer las pruebas. Si no usas la página en 15 minutos, se volverá "
+                                "a apagar y deberás volver a esperar.",
+                                class_name="text-gray-200",
+                            ),
+                            rx.link(
+                                "Ver implementación",
+                                href="https://titanicjsw.onrender.com/", 
+                                class_name="text-blue-300 hover:text-blue-200 transition-colors",
+                            ),
+                            class_name="p-4 bg-purple-900/30 rounded-xl border border-purple-500/30 mb-8",
+                        ),
+
                         class_name="w-full p-6 bg-gradient-to-br from-purple-900/40 to-black/40 rounded-2xl shadow-lg border border-purple-500/20 mb-6",
                     ),
                     class_name="w-full",
