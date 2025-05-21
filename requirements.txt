@@ -63,7 +63,7 @@ pytz==2025.2
 PyYAML==6.0.2
 pyzmq==26.4.0
 redis==5.2.1
-reflex==0.7.8
+reflex==0.7.12
 reflex-hosting-cli==0.1.42
 rich==13.9.4
 scikit-learn==1.6.1
