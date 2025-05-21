@@ -1,7 +1,7 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point2 import dataset_2_short, dataset_dispersion2, dataset_dispersion2, dataset_form2
-from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short , regression_instancia , model_message , regression_data_model
+from data_processing.regressionPoint2 import corre_variables, best_model, dataset_estandarizado_short, regression_instancia, model_message, regression_data_model, model_validation, model_optimization
 
 class State(rx.State):
     """The app state."""
@@ -390,10 +390,134 @@ def part2() -> rx.Component:
                         class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
                     ),
                     
-                        
+                    # Nueva sección para validación del modelo (punto d)
+                    rx.heading(
+                        "Validación del Modelo de Regresión",
+                        size="7",
+                        class_name="text-white mb-4 pt-6",
+                    ),
+                    rx.text(
+                        "La validación del modelo es un paso crucial para determinar si un modelo de regresión lineal es adecuado para los datos. Esta validación incluye verificar los supuestos del modelo, realizar pruebas de hipótesis para los parámetros, construir intervalos de confianza y analizar los residuos.",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
                     
+                    rx.code_block(
+                        model_validation,
+                        language="markdown",
+                        show_line_numbers=False,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                    
+                    rx.heading(
+                        "Análisis Visual de Residuos",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "El análisis visual de los residuos es fundamental para verificar los supuestos del modelo de regresión lineal. A continuación se presentan gráficos que nos ayudan a evaluar dichos supuestos:",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    
+                    rx.cond(
+                        model_validation.__contains__("NOTA"),
+                        rx.text(
+                            "Para visualizar los gráficos de residuos, instale las dependencias indicadas arriba y ejecute la aplicación nuevamente.",
+                            class_name="text-white text-center p-4 bg-red-900/50 rounded-xl mb-6"
+                        ),
+                        rx.vstack(
+                            rx.heading(
+                                "Residuos vs Valores Ajustados",
+                                size="5",
+                                class_name="text-white text-center font-bold mt-6"
+                            ),
+                            rx.text(
+                                "Este gráfico permite visualizar si los residuos se distribuyen de manera aleatoria alrededor de cero, lo que indicaría que el modelo es apropiado. Patrones en este gráfico pueden revelar problemas con el modelo.",
+                                class_name="text-white mb-4 text-center"
+                            ),
+                            rx.image(
+                                src='/residuos_vs_ajustados.png',
+                                height="500px",
+                                class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 object-contain",
+                            ),
+                            
+                            rx.heading(
+                                "Gráfico Q-Q de Residuos",
+                                size="5",
+                                class_name="text-white text-center font-bold mt-6"
+                            ),
+                            rx.text(
+                                "El gráfico Q-Q compara los cuantiles de los residuos con los cuantiles teóricos de una distribución normal. Si los puntos siguen aproximadamente la línea diagonal, los residuos siguen una distribución normal.",
+                                class_name="text-white mb-4 text-center"
+                            ),
+                            rx.image(
+                                src='/qq_residuos.png',
+                                height="500px",
+                                class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 object-contain",
+                            ),
+                            
+                            rx.heading(
+                                "Histograma de Residuos",
+                                size="5",
+                                class_name="text-white text-center font-bold mt-6"
+                            ),
+                            rx.text(
+                                "El histograma muestra la distribución de los residuos. Idealmente, debería seguir una forma aproximadamente normal y centrada en cero, lo que indicaría que los errores del modelo son aleatorios.",
+                                class_name="text-white mb-4 text-center"
+                            ),
+                            rx.image(
+                                src='/histograma_residuos.png',
+                                height="500px",
+                                class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 object-contain",
+                            ),
+                            width="100%",
+                            spacing="4",
+                            class_name="mb-6",
+                        )
+                    ),
+                    
+                    rx.text(
+                        "En base a esta validación, podemos concluir si el modelo de regresión lineal es adecuado para predecir el consumo de energía en función de la velocidad de producción, y cuáles son sus limitaciones y fortalezas.",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    
+                    # Nueva sección para el punto e: Utilización del modelo
+                    rx.heading(
+                        "Aplicación y Optimización del Modelo",
+                        size="7",
+                        class_name="text-white mb-4 pt-6",
+                    ),
+                    rx.text(
+                        "En esta sección aplicaremos el modelo para realizar predicciones específicas, construir intervalos de predicción, optimizar la eficiencia energética y proporcionar recomendaciones concretas para la empresa.",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    
+                    rx.code_block(
+                        model_optimization,
+                        language="markdown",
+                        show_line_numbers=False,
+                        class_name="bg-black text-white p-4 rounded-lg my-4 w-full overflow-auto",
+                    ),
+                    
+                    rx.heading(
+                        "Visualización de la Eficiencia Energética",
+                        size="6",
+                        class_name="text-white mb-4 pt-4",
+                    ),
+                    rx.text(
+                        "El siguiente gráfico muestra la relación entre la velocidad de producción y la eficiencia energética (consumo por unidad producida). El punto marcado en rojo representa la velocidad óptima que minimiza el consumo energético por unidad.",
+                        style={"white-space": "pre-line"},
+                        class_name="text-white mb-4",
+                    ),
+                    rx.image(
+                        src='/eficiencia_vs_velocidad.png',
+                        height="600px",
+                        class_name="p-4 rounded-2xl bg-black shadow-lg mb-8 object-contain",
+                    ),
 
-                    
                 class_name="p-8 rounded-2xl w-full bg-gradient-to-br from-black to-purple-800 shadow-lg overflow-x-auto",
             ),
                 
@@ -407,3 +531,5 @@ def part2() -> rx.Component:
 
 app = rx.App()
 app.add_page(part2)
+
+#e

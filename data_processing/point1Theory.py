@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Usar el backend Agg que no requiere interfaz gráfica
 import matplotlib.pyplot as plt
 from scipy import stats
 
@@ -93,5 +95,55 @@ def get_confidence_intervals():
     return result
 
 confidence_intervals_95 = get_confidence_intervals()
+
+def perform_hypothesis_test():
+    # Perform t-test for independent samples
+    t_stat, p_value = stats.ttest_ind(
+        dataset_general['Línea A (s)'],
+        dataset_general['Línea B (s)'],
+        equal_var=False  # Using Welch's t-test since variances are different
+    )
+    
+    # Calculate means for interpretation
+    mean_A = dataset_general['Línea A (s)'].mean()
+    mean_B = dataset_general['Línea B (s)'].mean()
+    
+    # Format p-value with scientific notation for extremely small values
+    if p_value < 0.0001:
+        p_value_str = f"{p_value:.12f}"  # Scientific notation for very small values
+    else:
+        p_value_str = f"{p_value:.4f}"
+    
+    # Format the results
+    result = f"""Prueba de hipótesis para comparar tiempos medios de ciclo:
+
+Hipótesis:
+- H₀: μ_A = μ_B (No hay diferencia significativa entre los tiempos medios)
+- H₁: μ_A ≠ μ_B (Existe diferencia significativa entre los tiempos medios)
+
+Resultados:
+- Estadístico t: {t_stat:.4f}
+- Valor p: {p_value_str}
+- Media Línea A: {mean_A:.2f} segundos
+- Media Línea B: {mean_B:.2f} segundos
+- Diferencia de medias: {mean_A - mean_B:.2f} segundos
+
+Interpretación:
+"""
+    
+    # Add interpretation based on p-value
+    if p_value < 0.05:
+        result += f"""- Se rechaza la hipótesis nula (p < 0.05)
+- Existe evidencia estadísticamente significativa de que los tiempos medios de ciclo son diferentes
+- La Línea B es en promedio {mean_A - mean_B:.2f} segundos más rápida que la Línea A
+- Esta diferencia es estadísticamente significativa y tiene implicaciones prácticas para la gestión del proceso"""
+    else:
+        result += f"""- No se rechaza la hipótesis nula (p > 0.05)
+- No hay evidencia estadísticamente significativa de diferencia entre los tiempos medios de ciclo
+- La diferencia observada de {mean_A - mean_B:.2f} segundos podría deberse al azar"""
+    
+    return result
+
+hypothesis_test_results = perform_hypothesis_test()
 
 
