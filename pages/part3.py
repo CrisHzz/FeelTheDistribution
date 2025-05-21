@@ -1,6 +1,7 @@
 import reflex as rx
 from rxconfig import config
 from data_processing.point3Titanic import dataset_original_titanic
+from data_processing.point3Titanic import dataset_cleaned_titanic
 class State(rx.State):
     """The app state."""
     ...
@@ -462,6 +463,80 @@ def part3() -> rx.Component:
                             "Teóricamente, el tamaño de la muestra no es lo suficientemente grande para obtener esa precisión esperada en terminos teoricos; "
                             "sin embargo, empíricamente y computacionalmente, obtenemos una precisión del 76%.",
                             class_name="text-gray-200 mb-4",
+                        ),
+                        rx.heading(
+                            "Dataset limpio",
+                            size="7",
+                            class_name="text-purple-200 mb-4",
+                        ),
+            
+                        rx.text(
+                            "Después de todo este largo proceso, obtuvimos nuestro dataset limpiando variables, justificando decisiones y obteniendo resultados. De un total de aproximadamente 1309 filas y 12 columnas, quedamos con 292 filas y 10 columnas. Realmente, es mucha la cantidad de datos e información que se perdió eliminando los valores vacíos, incoherentes y NaN, demostrando que este problema del Titanic, al haber ocurrido hace más de 100 años, perdió mucha información y es un milagro que en esos tiempos se pudiera haber obtenido al menos algunos datos de las personas.",
+                            class_name="text-gray-200 mb-4",
+                        ),
+                        rx.text(
+                            "De las variables obtenidas, algunas serán descartadas para la predicción, ya sea por su uso para otros propósitos o porque no sirven para alimentar el modelo. Específicamente, descartaremos Name, Cabin, boat y survived (esta última tiene un uso para la clasificación, mas no para la predicción).",
+                            class_name="text-gray-200 mb-4",
+                        ),
+                        rx.table.root(
+                            rx.table.header(
+                                rx.table.row(
+                                    *[
+                                        rx.table.column_header_cell(
+                                            col,
+                                            class_name="text-white"
+                                        )
+                                        for col in dataset_cleaned_titanic.columns
+                                    ]
+                                )
+                            ),
+                            rx.table.body(
+                                *[
+                                    rx.table.row(
+                                        *[
+                                            rx.table.cell(
+                                                str(value),
+                                                class_name="text-white"
+                                            )
+                                            for value in row
+                                        ]
+                                    )
+                                    for row in dataset_cleaned_titanic.values
+                                ]
+                            ),
+
+                            variant="surface",
+                            class_name="bg-black mb-8 w-full",
+                        ),
+                        rx.heading(
+                            "Nuestro modelo",
+                            size="6",
+                            class_name="text-purple-200 mb-4",
+                        ),
+                        rx.text(
+                            "Para nuestro modelo, utilizamos una regresión logística, también conocida como función sigmoid. Esta técnica nos permite crear una clasificación de tipo binaria para obtener un resultado basado en una o más variables independientes. Las variables pasan por esta función y retornan un valor entre 0 y 1, donde los valores cercanos a 1 indican alta probabilidad de supervivencia, mientras que los valores cercanos a 0 indican baja probabilidad de supervivencia.",
+                            class_name="text-gray-200 mb-4",
+                        ),
+                        rx.text(
+                            "En nuestro análisis, interpretamos los valores mayores a 0.6 como una supervivencia aceptable, siendo 1 una supervivencia casi perfecta. Por otro lado, los valores menores a 0.6 nos indican una probabilidad de supervivencia muy baja, casi nula. Esta función sigmoid nos permite transformar múltiples variables predictoras en una probabilidad clara y fácil de interpretar.",
+                            class_name="text-gray-200 mb-4",
+                        ),
+                        rx.markdown(
+                            """
+### Función Logística (Sigmoid)
+
+$$P(y=1|x) = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + ... + \\beta_n x_n)}}$$
+
+Donde:
+- $P(y=1|x)$ representa la probabilidad de supervivencia
+- $\\beta_0$ es el término de sesgo o intercepto
+- $\\beta_1, \\beta_2, ..., \\beta_n$ son los coeficientes del modelo
+- $x_1, x_2, ..., x_n$ son las variables independientes (edad, género, tarifa, etc.)
+- $e$ es la base del logaritmo natural (aproximadamente 2.71828)
+
+Esta función transforma cualquier valor de entrada en un rango entre 0 y 1, ideal para representar probabilidades.
+            """,
+                            class_name="text-gray-200 bg-purple-900/20 p-4 rounded-xl border border-purple-500/30 mb-4 overflow-x-auto",
                         ),
                         rx.heading(
                             "Titanic Survivors SandBox",
